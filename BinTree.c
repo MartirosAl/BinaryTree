@@ -41,9 +41,9 @@ void Insert(BinTreeNode** tree_, BinTreeNode* node_)
    {
       node_->parent = *tree_;
       if (node_->data < (*tree_)->data)
-         return Insert(&(*tree_)->left, node_);
+         Insert(&(*tree_)->left, node_);
       else
-         return Insert(&(*tree_)->right, node_);
+         Insert(&(*tree_)->right, node_);
    }
 }
 
@@ -60,6 +60,32 @@ void Insert(BinTreeNode** tree_, BinTreeNode* node_)
 void Remove(BinTreeNode** tree_, int data_)
 {
    BinTreeNode* f = Find((*tree_), data_);
+
+   if (f->parent == NULL)
+   {
+      if (f->left != NULL)
+      {
+         BinTreeNode* temp = f->left;
+         while (temp->right != NULL)
+         {
+            temp = temp->right;
+         }
+         f->data = temp->data;
+         Remove(&temp, temp->data);
+         return;
+      }
+      if (f->right != NULL)
+      {
+         BinTreeNode* temp = f->right;
+         while (temp->left != NULL)
+         {
+            temp = temp->left;
+         }
+         f->data = temp->data;
+         Remove(&temp, temp->data);
+         return;
+      }
+   }
 
    if (f->right == NULL && f->left == NULL)
    {
@@ -106,7 +132,8 @@ void Remove(BinTreeNode** tree_, int data_)
 
 void Print(BinTreeNode** tree_)
 {
-   if (*tree_ != NULL) {
+   if (*tree_ != NULL) 
+   {
       printf("%d ", (*tree_)->data);
       Print(&(*tree_)->left);
       Print(&(*tree_)->right);
@@ -167,3 +194,65 @@ void Print_leaves(BinTreeNode** tree_)
    }
 }
 
+void Depth_sensitive_printing(struct BinTreeNode** tree_, int data)
+{
+   if ((*tree_) == NULL) {
+      return;
+   }
+
+   for (int i = 0; i < data; i++) {
+      printf("  ");
+   }
+   printf("%d\n", (*tree_)->data);
+
+   Depth_sensitive_printing(&(*tree_)->right, ++data);
+
+   Depth_sensitive_printing(&(*tree_)->left, ++data);
+}
+
+int Depth_elements(struct BinTreeNode** tree_, int data, int data2)
+{
+   if ((*tree_) == NULL)
+      return -1;
+   if (data == (*tree_)->data)
+   {
+      return data2;
+   }
+      
+   if (data < (*tree_)->data)
+      return Depth_elements(&(*tree_)->left, data, data2 + 1);
+   else
+      return Depth_elements(&(*tree_)->right, data, data2 + 1);
+}
+
+int Same_depth(struct BinTreeNode** tree_, int data, int data2, int count)
+{
+   if ((*tree_) == NULL)
+      return 0;
+   if (data == data2)
+      return 1;
+
+   if (data > data2)
+   {
+      count += Same_depth(&(*tree_)->left, data, data2 + 1, 0);
+
+      count += Same_depth(&(*tree_)->right, data, data2 + 1, 0);
+
+      return count;
+   }
+
+   return 0;
+}
+
+int Depth_tree(struct BinTreeNode** tree_)
+{
+   if ((*tree_) == NULL) {
+      return 0;
+   }
+   else {
+      int leftDepth = Depth_tree(&(*tree_)->left);
+      int rightDepth = Depth_tree(&(*tree_)->right);
+
+      return 1 + ((leftDepth > rightDepth) ? leftDepth : rightDepth);
+   }
+}

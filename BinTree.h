@@ -41,3 +41,11 @@ int Min(BinTreeNode** tree_);
 int Number_of_elements(BinTreeNode** tree_, int data);
 
 void Print_leaves(BinTreeNode** tree_);
+
+void Depth_sensitive_printing(struct BinTreeNode** tree_, int data);
+
+int Depth_elements(struct BinTreeNode** tree_, int data, int data2);
+
+int Same_depth(struct BinTreeNode** tree_, int data, int data2, int count);
+
+int Depth_tree(struct BinTreeNode** tree_);

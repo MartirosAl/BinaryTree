@@ -9,14 +9,18 @@ int main()
    int data;
    while (1)
    {
-      printf("1. Find\n");
+      printf("1. Find\n");//1
       printf("2. Insert\n");
       printf("3. Remove\n");
-      printf("4. Print leaves\n");
-      printf("5. Sum\n");
-      printf("6. Max\n");
-      printf("7. Min\n");
-      printf("8. Number of elements\n");
+      printf("4. Print leaves\n");//6
+      printf("5. Sum\n");//2
+      printf("6. Max\n");//3
+      printf("7. Min\n");//4
+      printf("8. Number of elements\n");//5
+      printf("9. Depth-sensitive printing\n");//7
+      printf("10. Depth of the elements\n");//8
+      printf("11. Number of elements with same depth\n");//9
+      printf("12. Sorting array\n");//10
       scanf_s("%d", &ñhoice);
       switch (ñhoice)
       {
@@ -61,7 +65,23 @@ int main()
          printf("\n%d\n\n", Number_of_elements(&Tree, data));
          break;
       case(9):
-
+         printf("\n");
+         Depth_sensitive_printing(&Tree, 0);
+         printf("\n");
+         break;
+      case(10):
+         printf("Element: ");
+         scanf_s("%d", &data);
+         printf("\n%d\n\n", Depth_elements(&Tree, data, 0));
+         break;
+      case(11):
+         printf("Depth (starts with 0): ");
+         scanf_s("%d", &data);
+         printf("\n%d\n\n", Same_depth(&Tree, data, 0, 0));
+         break;
+      case(12):
+         printf("\n%d\n\n", Depth_tree(&Tree));
+         break;      
       default:
          return 0;
       }
